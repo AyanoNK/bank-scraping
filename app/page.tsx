@@ -2,16 +2,36 @@
 
 import { MockBoxItem } from "@/mock";
 import { TResponse } from "@/types/results";
-import { useEffect, useMemo, useState } from "react";
-import Bar from "./graph";
+import {
+  BaseSyntheticEvent,
+  SyntheticEvent,
+  createRef,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import BankChip from "@/components/BankChip";
+import DatePicker from "@/components/DatePicker";
 
 const questions = [
   "What variables will be returned from the API?",
   "Will you give me totals for each item or do I calculate it in the front end?",
 ];
 
+const availableBanks = [
+  "Davivienda",
+  "Colpatria",
+  "Bancolombia",
+  "Bancoomeva",
+  "Pichincha",
+];
+
 export default function Home() {
   const [extracts, setExtract] = useState<TResponse | undefined>();
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
+
+  console.log(startDate);
 
   const fetchData = async () => {
     const response = await MockBoxItem;
@@ -19,44 +39,52 @@ export default function Home() {
     setExtract(response);
   };
 
+  const handleSetStartDate = (e: BaseSyntheticEvent) => {
+    setStartDate(new Date(e.target.value.replace(/-/g, "/")));
+  };
+  const handleEndDate = (e: BaseSyntheticEvent) => {
+    const newEndDate = new Date(e.target.value.replace(/-/g, "/"));
+    if (newEndDate > startDate)
+      setEndDate(new Date(e.target.value.replace(/-/g, "/")));
+    else alert("End date must be greater than start date");
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-10">
-      <h1 className="font-sans text-5xl">Bank Statement Scrapper</h1>
-      <div className="flex flex-col gap-1 align-center justify-center">
-        <span>
-          This is where we would put the file upload to send to the backend and
-          get the data back
-        </span>
-        <input type="file" className="box-border" />
-      </div>
-      <div className="flex flex-row justify-between gap-3.5">
-        <span>Date picker does not work yet</span>
-        <input
-          type="date"
-          id="start"
-          name="trip-start"
-          min="2018-01-01"
-          max="2018-12-31"
-        />
-        <input
-          type="date"
-          id="end"
-          name="trip-end"
-          min="2018-01-01"
-          max="2018-12-31"
-        />
-      </div>
-      <div className="flex flex-col gap-6">
-        <h2 className="text-4xl">Check the data</h2>
-        <div className="flex flex-col gap-3 w-[64rem] h-96">
-          {extracts && <Bar extracts={extracts} />}
+    <div className="flex flex-col items-center justify-center gap-24 container">
+      <div className="grid grid-cols-2 gap-12 items-center">
+        <h2 className="text-2xl">
+          Upload your bank extracts and get key information about your invoices.
+        </h2>
+        <div className="flex flex-col gap-5 items-center justify-center">
+          <h3 className="text-xl font-medium text-center">Supported banks</h3>
+          <div className="flex flex-row gap-2 flex-wrap justify-center">
+            {availableBanks.map((bank: string) => (
+              <BankChip key={bank} name={bank} />
+            ))}
+            <BankChip name="More to come!" />
+          </div>
         </div>
       </div>
-      <span className="text-xl">Questions</span>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1 w-full">
+        <div
+          className="col-span-2 w-full h-28 flex items-center justify-center bg-secondary mb-4 rounded-md hover:opacity-80 ease-in-out duration-300
+        "
+        >
+          <span className="text-lg">Drop your file here</span>
+        </div>
+        <DatePicker onChange={handleSetStartDate} />
+        <DatePicker onChange={handleEndDate} />
+        <span className="col-span-2 text-sm">
+          Please use the calendar selector as the written input is still in
+          progress.
+        </span>
+      </div>
+
+      <span className="text-xl">PUTO EL QUE LO LEA</span>
       <div className="flex flex-col gap-2">
         {questions.map((question) => (
           <span key={question}>{question}</span>
@@ -74,6 +102,6 @@ export default function Home() {
           .
         </span>
       </div>
-    </main>
+    </div>
   );
 }
