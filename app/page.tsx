@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { MockBoxItem } from "@/mock";
-import { TResponse } from "@/types/results";
+import { MockBoxItem } from '@/mock';
+import { TResponse } from '@/types/results';
 import {
   BaseSyntheticEvent,
   SyntheticEvent,
@@ -9,21 +9,21 @@ import {
   useEffect,
   useMemo,
   useState,
-} from "react";
-import BankChip from "@/components/BankChip";
-import DatePicker from "@/components/DatePicker";
+} from 'react';
+import BankChip from '@/components/BankChip';
+import DatePicker from '@/components/DatePicker';
 
 const questions = [
-  "What variables will be returned from the API?",
-  "Will you give me totals for each item or do I calculate it in the front end?",
+  'What variables will be returned from the API?',
+  'Will you give me totals for each item or do I calculate it in the front end?',
 ];
 
 const availableBanks = [
-  "Davivienda",
-  "Colpatria",
-  "Bancolombia",
-  "Bancoomeva",
-  "Pichincha",
+  'Davivienda',
+  'Colpatria',
+  'Bancolombia',
+  'Bancoomeva',
+  'Pichincha',
 ];
 
 export default function Home() {
@@ -40,13 +40,13 @@ export default function Home() {
   };
 
   const handleSetStartDate = (e: BaseSyntheticEvent) => {
-    setStartDate(new Date(e.target.value.replace(/-/g, "/")));
+    setStartDate(new Date(e.target.value.replace(/-/g, '/')));
   };
   const handleEndDate = (e: BaseSyntheticEvent) => {
-    const newEndDate = new Date(e.target.value.replace(/-/g, "/"));
+    const newEndDate = new Date(e.target.value.replace(/-/g, '/'));
     if (newEndDate > startDate)
-      setEndDate(new Date(e.target.value.replace(/-/g, "/")));
-    else alert("End date must be greater than start date");
+      setEndDate(new Date(e.target.value.replace(/-/g, '/')));
+    else alert('End date must be greater than start date');
   };
 
   useEffect(() => {
@@ -55,8 +55,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-24 container">
-      <div className="grid grid-cols-2 gap-12 items-center">
-        <h2 className="text-2xl">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-12 items-center">
+        <h2 className="text-2xl text-center md:text-left">
           Upload your bank extracts and get key information about your invoices.
         </h2>
         <div className="flex flex-col gap-5 items-center justify-center">
@@ -69,15 +69,14 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-1 w-full">
-        <div
-          className="col-span-2 w-full h-28 flex items-center justify-center bg-secondary mb-4 rounded-md hover:opacity-80 ease-in-out duration-300
-        "
-        >
+      <div className="flex flex-col items-center justify-center">
+        <div className="col-span-2 w-full h-28 flex items-center justify-center bg-secondary mb-4 rounded-md hover:opacity-80 ease-in-out duration-300">
           <span className="text-lg">Drop your file here</span>
         </div>
-        <DatePicker onChange={handleSetStartDate} />
-        <DatePicker onChange={handleEndDate} />
+        <div className="flex flex-col md:flex-row gap-x-4 gap-y-2 w-full">
+          <DatePicker onChange={handleSetStartDate} />
+          <DatePicker onChange={handleEndDate} />
+        </div>
         <span className="col-span-2 text-sm">
           Please use the calendar selector as the written input is still in
           progress.
@@ -91,7 +90,7 @@ export default function Home() {
         ))}
         <span>
           Any thoughts on deploying? Vercel has serverless functions now. Check
-          them out{" "}
+          them out{' '}
           <a
             href="https://youtu.be/WALOgcZICI8"
             className="underline text-blue-500"
