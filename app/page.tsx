@@ -2,16 +2,10 @@
 
 import { MockBoxItem } from '@/mock';
 import { TResponse } from '@/types/results';
-import {
-  BaseSyntheticEvent,
-  SyntheticEvent,
-  createRef,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { BaseSyntheticEvent, useEffect, useState } from 'react';
 import BankChip from '@/components/BankChip';
 import DatePicker from '@/components/DatePicker';
+import FileUploadInput from '@/components/FileUpload/FileUploadInput';
 
 const questions = [
   'What variables will be returned from the API?',
@@ -27,6 +21,7 @@ const availableBanks = [
 ];
 
 export default function Home() {
+  const [bankFile, setBankFile] = useState<File | null>(null);
   const [extracts, setExtract] = useState<TResponse | undefined>();
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
@@ -69,11 +64,13 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <div className="col-span-2 w-full h-28 flex items-center justify-center bg-secondary mb-4 rounded-md hover:opacity-80 ease-in-out duration-300">
-          <span className="text-lg">Drop your file here</span>
-        </div>
-        <div className="flex flex-col md:flex-row gap-x-4 gap-y-2 w-full">
+      <div className="flex flex-col items-center justify-center gap-6 w-full">
+        <FileUploadInput
+          file={bankFile}
+          handleFile={setBankFile}
+          acceptedExtensions={['text/plain']}
+        />
+        <div className="flex flex-col md:flex-row gap-x-4 gap-y-6 w-full">
           <DatePicker onChange={handleSetStartDate} />
           <DatePicker onChange={handleEndDate} />
         </div>

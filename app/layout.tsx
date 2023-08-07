@@ -35,7 +35,6 @@ export default function RootLayout({
               height={75}
             />
           </div>
-
           {children}
         </main>
       </body>
