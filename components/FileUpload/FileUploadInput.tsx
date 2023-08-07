@@ -31,10 +31,6 @@ export default function FileUploadInput({
   );
   const handleDeleteFile = useCallback(() => handleFile(null), [handleFile]);
 
-  console.log(
-    acceptedExtensions &&
-      acceptedFileExtensionsListGenerator(acceptedExtensions),
-  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     accept:

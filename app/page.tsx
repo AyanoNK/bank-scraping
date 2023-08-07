@@ -1,11 +1,11 @@
 'use client';
 
-import { MockBoxItem } from '@/mock';
 import { TResponse } from '@/types/results';
 import { BaseSyntheticEvent, useEffect, useState } from 'react';
 import BankChip from '@/components/BankChip';
-import DatePicker from '@/components/DatePicker';
 import FileUploadInput from '@/components/FileUpload/FileUploadInput';
+import api from '@/providers/api';
+import FileForm from '@/forms/FileForm';
 
 const questions = [
   'What variables will be returned from the API?',
@@ -25,13 +25,21 @@ export default function Home() {
   const [extracts, setExtract] = useState<TResponse | undefined>();
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
+  const [isShowing, setIsShowing] = useState(false);
 
-  console.log(startDate);
-
-  const fetchData = async () => {
-    const response = await MockBoxItem;
-    console.log(response);
-    setExtract(response);
+  const getDataFromBankFile = async () => {
+    const url = process.env.NEXT_PUBLIC_BACKEND_HOST;
+    console.log(url);
+    if (url) {
+      const { data, status } = await api
+        .post(url, {
+          method: 'POST',
+        })
+        .catch((err) => {
+          return { data: undefined, status: err.response.status };
+        });
+      if (data !== undefined) console.log(data);
+    }
   };
 
   const handleSetStartDate = (e: BaseSyntheticEvent) => {
@@ -44,42 +52,18 @@ export default function Home() {
     else alert('End date must be greater than start date');
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
-    <div className="flex flex-col items-center justify-center gap-24 container">
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-12 items-center">
-        <h2 className="text-2xl text-center md:text-left">
-          Upload your bank extracts and get key information about your invoices.
-        </h2>
-        <div className="flex flex-col gap-5 items-center justify-center">
-          <h3 className="text-xl font-medium text-center">Supported banks</h3>
-          <div className="flex flex-row gap-2 flex-wrap justify-center">
-            {availableBanks.map((bank: string) => (
-              <BankChip key={bank} name={bank} />
-            ))}
-            <BankChip name="More to come!" />
-          </div>
+    <div className="flex flex-col items-center justify-center gap-y-12 container">
+      <div className="flex flex-col gap-5 items-center justify-center">
+        <h3 className="text-xl font-medium text-center">Supported banks</h3>
+        <div className="flex flex-row gap-2 flex-wrap justify-center">
+          {availableBanks.map((bank: string) => (
+            <BankChip key={bank} name={bank} />
+          ))}
+          <BankChip name="More to come!" />
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center gap-6 w-full">
-        <FileUploadInput
-          file={bankFile}
-          handleFile={setBankFile}
-          acceptedExtensions={['text/plain']}
-        />
-        <div className="flex flex-col md:flex-row gap-x-4 gap-y-6 w-full">
-          <DatePicker onChange={handleSetStartDate} />
-          <DatePicker onChange={handleEndDate} />
-        </div>
-        <span className="col-span-2 text-sm">
-          Please use the calendar selector as the written input is still in
-          progress.
-        </span>
-      </div>
-
+      <FileForm />
       <span className="text-xl">PUTO EL QUE LO LEA</span>
       <div className="flex flex-col gap-2">
         {questions.map((question) => (
