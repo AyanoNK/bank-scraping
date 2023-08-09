@@ -45,7 +45,7 @@ export default function FileUploadInput({
       {...getRootProps()}
     >
       {file ? (
-        <div className="flex flex-col items-center justify-around h-full w-full ">
+        <div className="flex flex-col items-center justify-around h-full w-full">
           <span className="text-lg font-semibold">{file.name}</span>
           <span className="text-sm">Select another file?</span>
         </div>
