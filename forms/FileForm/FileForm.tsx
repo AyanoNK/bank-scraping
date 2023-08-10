@@ -1,97 +1,75 @@
 'use client';
 
 import { TResponse } from '@/types/results';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import FileUploadInput from '@/components/FileUpload/FileUploadInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import fileFormSchema from '@/schemas/fileFormSchema';
 import useSendFileToReview from '@/hooks/useSendFileToReview';
-import ReactQueryProvider from '@/providers/ReactQueryProvider';
-import clsx from 'clsx';
+import fileToBase64 from '@/providers/fileToBase64';
+import { InsightsContext } from '@/app/page';
 
 type FormValues = {
   type: string;
 };
 
 export default function FileForm() {
+  const insightsProvider = useContext(InsightsContext);
+
   const [bankFile, setBankFile] = useState<File | null>(null);
-  const [extracts, setExtract] = useState<TResponse | undefined>();
-  const { mutate, isLoading, isError } = useSendFileToReview();
-  const { handleSubmit, register, setValue, formState } = useForm({
+  const { mutate, isLoading, isError, data } = useSendFileToReview();
+  const { handleSubmit, register } = useForm({
     resolver: yupResolver(fileFormSchema),
+    defaultValues: {
+      type: 'credit',
+    },
   });
-  const validSubmit = bankFile !== null || !isLoading || formState.isValid;
 
-  const getBase64 = (file: File) => {
-    let baseURL = '';
-    // Make new FileReader
-    let reader = new FileReader();
-
-    // Convert the file to base64 text
-    reader.readAsDataURL(file);
-
-    // on reader load somthing...
-    reader.onload = () => {
-      // Make a fileInfo Object
-      if (typeof reader.result === 'string') baseURL = reader.result;
-    };
-    return baseURL;
-  };
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const base64String = await fileToBase64(bankFile as File);
     const values = {
       ...data,
-      file: getBase64(bankFile as File),
+      file: base64String,
     };
     mutate(values);
   };
 
+  useEffect(() => {
+    if (data) {
+      insightsProvider.setInsights(data as TResponse);
+    }
+  }, [data]);
+
   return (
-    <ReactQueryProvider>
-      <form
-        className="flex flex-col gap-4 w-full"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="flex flex-col items-center justify-center gap-5 w-full">
-          <FileUploadInput
-            file={bankFile}
-            handleFile={setBankFile}
-            acceptedExtensions={['text/plain']}
-          />
-          <label htmlFor="type">Type of file</label>
-          <div className="flex flex-row gap-2 w-full items-center justify-center flex-wrap">
-            <button
-              type="button"
-              onClick={() => {
-                console.log('AAAA');
-                setValue('type', 'credit');
-              }}
-              className="px-4 py-2 rounded-md border border-secondary"
-              {...register('type')}
-            >
-              Credit
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                console.log('AAAA');
-                setValue('type', 'debit');
-              }}
-              className="px-4 py-2 rounded-md border border-secondary"
-              {...register('type')}
-            >
-              Debit
-            </button>
-          </div>
-        </div>
-      </form>
+    <form
+      className="flex flex-col items-center justify-center gap-5 w-full"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="flex flex-col items-center justify-center gap-5 w-full">
+        <select
+          {...register('type')}
+          className="px-4 py-2 rounded-md bg-secondary"
+        >
+          <option value="credit">Credit</option>
+          <option value="debit">Debit</option>
+        </select>
+        <FileUploadInput
+          file={bankFile}
+          handleFile={setBankFile}
+          acceptedExtensions={['text/plain']}
+        />
+      </div>
+
       <button
         type="submit"
-        className="px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110"
+        disabled={bankFile === null || isLoading}
+        className={`px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110 ${
+          isLoading && 'cursor-progress'
+        }`}
       >
         Get my insights!
       </button>
-    </ReactQueryProvider>
+    </form>
   );
 }

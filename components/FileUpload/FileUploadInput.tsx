@@ -41,26 +41,26 @@ export default function FileUploadInput({
 
   return (
     <div
-      className="border-dashed border-2 border-secondary hover:border-accent focus:border-accent rounded-md cursor-pointer py-8 px-48 w-full"
+      className="flex flex-col items-center justify-center border-dashed border-2 border-secondary hover:border-accent focus:border-accent rounded-md cursor-pointer py-8 px-48 w-full"
       {...getRootProps()}
     >
       {file ? (
         <div className="flex flex-col items-center justify-around h-full w-full">
-          <span className="text-lg font-semibold">{file.name}</span>
-          <span className="text-sm">Select another file?</span>
+          <span className="text-lg font-semibold w-max">{file.name}</span>
+          <span className="text-sm text-center w-max">
+            Select a different file?
+          </span>
         </div>
       ) : (
-        <div>
-          <div className="flex flex-row items-center justify-center w-full h-full">
-            <input {...getInputProps()} />
-            {isDragActive ? (
-              <span className="text-lg">Here! Here!</span>
-            ) : (
-              <span className="text-lg">
-                <span className="text-lg">Select or drop your file</span>
-              </span>
-            )}
-          </div>
+        <div className="flex flex-col items-center justify-around h-full w-full">
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <span className="text-lg text-center w-max">Here! Here!</span>
+          ) : (
+            <span className="text-lg text-center w-max">
+              Select or drop your file
+            </span>
+          )}
         </div>
       )}
     </div>
