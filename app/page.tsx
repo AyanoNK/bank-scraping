@@ -2,15 +2,12 @@
 
 import BankChip from '@/components/BankChip';
 import FileForm from '@/forms/FileForm/FileForm';
+import { InsightsContext } from '@/providers/InsightsContext';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import { InsightsContextType, TResponse } from '@/types/results';
 import { createContext, useState } from 'react';
 
 const availableBanks = ['Davivienda', 'Bancolombia'];
-
-export const InsightsContext = createContext<InsightsContextType>(
-  {} as InsightsContextType,
-);
 
 export default function Home() {
   const [insights, setInsights] = useState<TResponse | undefined>();

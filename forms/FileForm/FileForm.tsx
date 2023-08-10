@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import fileFormSchema from '@/schemas/fileFormSchema';
 import useSendFileToReview from '@/hooks/useSendFileToReview';
 import fileToBase64 from '@/providers/fileToBase64';
-import { InsightsContext } from '@/app/page';
+import { InsightsContext } from '@/providers/InsightsContext';
 
 type FormValues = {
   type: string;
