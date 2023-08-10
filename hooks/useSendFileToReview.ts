@@ -1,6 +1,6 @@
 import { FILEFORM_CACHE_KEYS } from '@/forms/FileForm/FileForm.constants';
 import api from '@/providers/api';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 interface Props {
