@@ -1,5 +1,6 @@
-export type Item = {
+type Item = {
   name: string;
   price: number;
-  date: string;
+  month: number;
+  year: number;
 };

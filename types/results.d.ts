@@ -1,10 +1,8 @@
-import { Item } from './item';
-
-export type TResponse = {
+type TResponse = {
   itemsFound: number;
   itemsProcessed: number;
-  label: string;
-  data: Item[];
+  totals: Item[];
+  items: Item[];
 };
 
 type InsightsContextType = {

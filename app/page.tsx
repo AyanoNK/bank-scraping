@@ -2,15 +2,20 @@
 
 import BankChip from '@/components/BankChip';
 import FileForm from '@/forms/FileForm/FileForm';
+import { mockResponse } from '@/mock';
 import { InsightsContext } from '@/providers/InsightsContext';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
-import { InsightsContextType, TResponse } from '@/types/results';
-import { createContext, useState } from 'react';
+import { useEffect, useState } from 'react';
+import Analysis from '@/modules/analysis';
 
 const availableBanks = ['Davivienda', 'Bancolombia'];
 
 export default function Home() {
   const [insights, setInsights] = useState<TResponse | undefined>();
+
+  // useEffect(() => {
+  //   setInsights(mockResponse);
+  // }, []);
 
   return (
     <InsightsContext.Provider
@@ -33,7 +38,7 @@ export default function Home() {
           {/* <button className="px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110 hidden">
           This is the worst practice I have ever done throughout my whole career
         </button> */}
-          {insights ? <span>Loaded</span> : <FileForm />}
+          {insights ? <Analysis /> : <FileForm />}
         </div>
       </ReactQueryProvider>
     </InsightsContext.Provider>

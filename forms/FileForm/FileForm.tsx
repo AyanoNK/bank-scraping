@@ -1,6 +1,5 @@
 'use client';
 
-import { TResponse } from '@/types/results';
 import { useContext, useEffect, useState } from 'react';
 import FileUploadInput from '@/components/FileUpload/FileUploadInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
