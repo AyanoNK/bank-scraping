@@ -20,7 +20,7 @@ export default function RootLayout({
       <body
         className={`bg-zinc-50 text-text ${inter.className} flex flex-col min-h-screen items-center justify-center`}
       >
-        <main className="flex flex-col items-center justify-center gap-24 p-24 max-w-sm md:max-w-6xl">
+        <main className="flex flex-col items-center justify-center gap-24 p-24 max-w-xs sm:max-w-2xl md:max-w-6xl">
           <div className="flex flex-row relative items-center group">
             <h1 className="text-5xl font-bold italic text-center before:block before:absolute before:-inset-7 before:-skew-y-2 before:bg-primary relative inline-block">
               <span className="relative text-white">

@@ -11,11 +11,7 @@ import Analysis from '@/modules/analysis';
 const availableBanks = ['Davivienda', 'Bancolombia'];
 
 export default function Home() {
-  const [insights, setInsights] = useState<TResponse | undefined>();
-
-  // useEffect(() => {
-  //   setInsights(mockResponse);
-  // }, []);
+  const [insights, setInsights] = useState<TResponse | undefined>(mockResponse);
 
   return (
     <InsightsContext.Provider
@@ -25,7 +21,7 @@ export default function Home() {
       }}
     >
       <ReactQueryProvider>
-        <div className="flex flex-col items-center justify-center gap-y-12 container">
+        <div className="flex flex-col items-center justify-center gap-y-12 container w-max">
           <div className="flex flex-col gap-5 items-center justify-center">
             <h3 className="text-xl font-medium text-center">Supported banks</h3>
             <div className="flex flex-row gap-2 flex-wrap justify-center">

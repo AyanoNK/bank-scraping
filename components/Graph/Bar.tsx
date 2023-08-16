@@ -1,18 +1,26 @@
 import useDemoConfig from '@/hooks/useDemoConfig';
+import { mockResponse } from '@/mock';
 import React from 'react';
 import { AxisOptions, Chart } from 'react-charts';
 
 export default function Bar() {
-  const { data } = useDemoConfig({
-    series: 3,
-    dataType: 'ordinal',
-  });
-  console.log(data);
+  const data = [
+    {
+      label: 'Main Series',
+      data: [
+        ...mockResponse.totals.map((total) => ({
+          primary: total.name,
+          secondary: total.price,
+        })),
+      ],
+    },
+  ];
 
   const primaryAxis = React.useMemo<
     AxisOptions<(typeof data)[number]['data'][number]>
   >(
     () => ({
+      position: 'left',
       getValue: (datum) => datum.primary,
     }),
     [],
@@ -23,6 +31,7 @@ export default function Bar() {
   >(
     () => [
       {
+        position: 'bottom',
         getValue: (datum) => datum.secondary,
       },
     ],

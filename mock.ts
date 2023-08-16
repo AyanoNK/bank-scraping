@@ -6,7 +6,7 @@ export const mockResponse: TResponse = {
   totals: [
     {
       name: 'RAPPI',
-      price: 100000,
+      price: 350000,
       month: 8,
       year: 2023,
     },
@@ -18,13 +18,13 @@ export const mockResponse: TResponse = {
     },
     {
       name: 'UBER',
-      price: 981500,
+      price: 681500,
       month: 9,
       year: 2023,
     },
     {
       name: 'CABIFY',
-      price: 22900,
+      price: 222900,
       month: 9,
       year: 2023,
     },
