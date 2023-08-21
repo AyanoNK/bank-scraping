@@ -4,12 +4,11 @@ import BankChip from '@/components/BankChip';
 import FileForm from '@/forms/FileForm/FileForm';
 import { mockResponse } from '@/mock';
 import { InsightsContext } from '@/providers/InsightsContext';
-import Link from 'next/link';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import { useEffect, useState } from 'react';
 import Analysis from '@/modules/analysis';
 
-const availableBanks = ['Davivienda', 'Bancolombia'];
+const availableBanks = ['Davivienda'];
 
 export default function Home() {
   const [insights, setInsights] = useState<TResponse | undefined>(mockResponse);
@@ -32,24 +31,10 @@ export default function Home() {
               <BankChip name="More to come!" />
             </div>
           </div>
-          <h5 className="text-center text-lg">Choose your type of extracts</h5>
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
-            <Link
-              href="/debit"
-              className="px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110"
-            >
-              Debit
-            </Link>
-            <Link
-              href="/credit"
-              className="px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110"
-            >
-              Credit
-            </Link>
-          </div>
           {/* <button className="px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110 hidden">
           This is the worst practice I have ever done throughout my whole career
         </button> */}
+          {insights ? <Analysis /> : <FileForm />}
         </div>
       </ReactQueryProvider>
     </InsightsContext.Provider>

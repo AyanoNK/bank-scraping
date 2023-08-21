@@ -8,16 +8,16 @@ interface Props {
   file: string;
 }
 
-const sendFileToReview = async (requestData: Props | null) => {
+const getInsightCreditExtract = async (requestData: Props | null) => {
   if (!requestData) return;
-  const { data } = await api.post(`/getInsights`, requestData);
+  const { data } = await api.post(`/credit`, requestData);
   return data;
 };
 
-const useSendFileToReview = () => {
+const useInsightCreditExtract = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(sendFileToReview, {
+  return useMutation(getInsightCreditExtract, {
     onError: (error) => {
       let errorMessage = '';
       if (axios.isAxiosError(error) && error.response?.status === 400) {
@@ -25,9 +25,9 @@ const useSendFileToReview = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([FILEFORM_CACHE_KEYS.newFileForm]);
+      queryClient.invalidateQueries([FILEFORM_CACHE_KEYS.newCreditFileForm]);
     },
   });
 };
 
-export default useSendFileToReview;
+export default useInsightCreditExtract;

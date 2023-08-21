@@ -1,4 +1,6 @@
 export const FILEFORM_CACHE_KEYS = {
-  fileform: 'fileform',
-  newFileForm: 'newFileForm',
+  debitFileForm: 'debitFileForm',
+  newDebitFileForm: 'newDebitFileForm',
+  creditFileForm: 'creditFileForm',
+  newCreditFileForm: 'newCreditFileForm',
 };

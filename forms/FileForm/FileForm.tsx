@@ -5,7 +5,7 @@ import FileUploadInput from '@/components/FileUpload/FileUploadInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import fileFormSchema from '@/schemas/fileFormSchema';
-import useSendFileToReview from '@/hooks/useSendFileToReview';
+import useInsightCreditExtract from '@/hooks/useInsightCreditExtract';
 import fileToBase64 from '@/providers/fileToBase64';
 import { InsightsContext } from '@/providers/InsightsContext';
 
@@ -17,7 +17,7 @@ export default function FileForm() {
   const insightsProvider = useContext(InsightsContext);
 
   const [bankFile, setBankFile] = useState<File | null>(null);
-  const { mutate, isLoading, isError, data } = useSendFileToReview();
+  const { mutate, isLoading, isError, data } = useInsightCreditExtract();
   const { handleSubmit, register } = useForm({
     resolver: yupResolver(fileFormSchema),
     defaultValues: {
