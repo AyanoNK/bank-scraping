@@ -1,6 +1,9 @@
 type Item = {
-  name: string;
-  price: number;
-  month: number;
-  year: number;
+  amount: number;
+  date: string;
+  day: string;
+  description: string;
+  month: string;
+  type: string;
+  year: string;
 };
