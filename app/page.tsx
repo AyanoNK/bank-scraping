@@ -31,12 +31,12 @@ export default function Home() {
           </div>
           <h5 className="text-center text-lg">Choose your type of extracts</h5>
           <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
-            <Link
+            {/* <Link
               href="/debit"
               className="px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110"
             >
               Debit
-            </Link>
+            </Link> */}
             <Link
               href="/credit"
               className="px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110"
