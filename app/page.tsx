@@ -1,18 +1,15 @@
 'use client';
 
 import BankChip from '@/components/BankChip';
-import FileForm from '@/forms/FileForm/FileForm';
-import { mockResponse } from '@/mock';
 import { InsightsContext } from '@/providers/InsightsContext';
 import Link from 'next/link';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
-import { useEffect, useState } from 'react';
-import Analysis from '@/modules/analysis';
+import { useState } from 'react';
 
 const availableBanks = ['Davivienda', 'Bancolombia'];
 
 export default function Home() {
-  const [insights, setInsights] = useState<TResponse | undefined>(mockResponse);
+  const [insights, setInsights] = useState<TResponse | undefined>(undefined);
 
   return (
     <InsightsContext.Provider

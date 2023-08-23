@@ -2,10 +2,9 @@
 
 import BankChip from '@/components/BankChip';
 import FileForm from '@/forms/FileForm/FileForm';
-import { mockResponse } from '@/mock';
 import { InsightsContext } from '@/providers/InsightsContext';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Analysis from '@/modules/analysis';
 
 const availableBanks = ['Davivienda'];
