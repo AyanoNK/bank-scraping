@@ -6,24 +6,11 @@ export default function Analysis() {
   const { insights, setInsights } = useContext(InsightsContext);
   const handleResetInsights = () => setInsights(undefined);
 
-  const processingPercentage =
-    insights?.itemsProcessed && insights?.itemsFound
-      ? `${Math.round((insights.itemsProcessed / insights.itemsFound) * 100)}%`
-      : '0%';
-
   return (
-    <div className="flex flex-col items-center justify-center gap-5 w-full">
+    <div className="flex flex-col items-center justify-center gap-5 w-full max-w-4xl bg-slate-400">
       <span className="text-xl font-bold text-left">Analysis</span>
       <div className="w-full" style={{ height: '24rem' }}>
-        <Bar />
-      </div>
-      <div className="flex flex-wrap flex-col w-full">
-        <span className="text-sm">Found: {insights?.itemsFound}</span>
-        <span className="text-sm">Processed: {insights?.itemsProcessed}</span>
-        <span className="text-sm">
-          Coverage:{' '}
-          <span className="font-semibold">{processingPercentage}</span>
-        </span>
+        {insights && <Bar barData={insights?.agg} />}
       </div>
       <button
         className="px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110"

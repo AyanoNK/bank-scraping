@@ -1,16 +1,19 @@
 import useDemoConfig from '@/hooks/useDemoConfig';
-import { mockResponse } from '@/mock';
 import React from 'react';
 import { AxisOptions, Chart } from 'react-charts';
 
-export default function Bar() {
+type TBar = {
+  barData: Item[];
+};
+
+export default function Bar({ barData }: TBar) {
   const data = [
     {
       label: 'Main Series',
       data: [
-        ...mockResponse.totals.map((total) => ({
-          primary: total.name,
-          secondary: total.price,
+        ...barData.map((total) => ({
+          primary: total.type,
+          secondary: total.amount,
         })),
       ],
     },

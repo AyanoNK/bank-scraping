@@ -11,7 +11,7 @@ import Analysis from '@/modules/analysis';
 const availableBanks = ['Davivienda'];
 
 export default function Home() {
-  const [insights, setInsights] = useState<TResponse | undefined>(mockResponse);
+  const [insights, setInsights] = useState<TResponse | undefined>(undefined);
 
   return (
     <InsightsContext.Provider
