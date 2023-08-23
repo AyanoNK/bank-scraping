@@ -4,13 +4,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 interface Props {
-  type: string;
-  file: string;
+  b64string: string;
 }
 
 const getInsightCreditExtract = async (requestData: Props | null) => {
   if (!requestData) return;
-  const { data } = await api.post(`/credit`, requestData);
+  const { data } = await api.post(`/api/parse/credit`, requestData);
   return data;
 };
 
