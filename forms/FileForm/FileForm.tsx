@@ -9,27 +9,17 @@ import useInsightCreditExtract from '@/hooks/useInsightCreditExtract';
 import fileToBase64 from '@/providers/fileToBase64';
 import { InsightsContext } from '@/providers/InsightsContext';
 
-type FormValues = {
-  type: string;
-};
-
 export default function FileForm() {
   const insightsProvider = useContext(InsightsContext);
 
   const [bankFile, setBankFile] = useState<File | null>(null);
   const { mutate, isLoading, isError, data } = useInsightCreditExtract();
-  const { handleSubmit, register } = useForm({
-    resolver: yupResolver(fileFormSchema),
-    defaultValues: {
-      type: 'credit',
-    },
-  });
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit = async () => {
     const base64String = await fileToBase64(bankFile as File);
     const values = {
       ...data,
-      file: base64String,
+      b64string: base64String,
     };
     mutate(values);
   };
@@ -41,24 +31,12 @@ export default function FileForm() {
   }, [data]);
 
   return (
-    <form
-      className="flex flex-col items-center justify-center gap-5 w-full"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="flex flex-col items-center justify-center gap-5 w-full">
-        <select
-          {...register('type')}
-          className="px-4 py-2 rounded-md bg-secondary"
-        >
-          <option value="credit">Credit</option>
-          <option value="debit">Debit</option>
-        </select>
-        <FileUploadInput
-          file={bankFile}
-          handleFile={setBankFile}
-          acceptedExtensions={['text/plain']}
-        />
-      </div>
+    <div className="flex flex-col items-center justify-center gap-5 w-full">
+      <FileUploadInput
+        file={bankFile}
+        handleFile={setBankFile}
+        acceptedExtensions={['text/plain']}
+      />
 
       <button
         type="submit"
@@ -66,9 +44,10 @@ export default function FileForm() {
         className={`px-4 py-2 font-medium text-md bg-secondary text-text rounded-md shadow-sm ease-in-out duration-300 hover:bg-primary hover:text-white hover:scale-110 ${
           isLoading && 'cursor-progress'
         }`}
+        onClick={onSubmit}
       >
         Get my insights!
       </button>
-    </form>
+    </div>
   );
 }
