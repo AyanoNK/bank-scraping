@@ -1,5 +1,6 @@
 import Bar from '@/components/Graph/Bar';
 import { InsightsContext } from '@/providers/InsightsContext';
+
 import { useContext } from 'react';
 
 export default function Analysis() {
@@ -7,9 +8,9 @@ export default function Analysis() {
   const handleResetInsights = () => setInsights(undefined);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-5 w-full max-w-4xl bg-slate-400">
+    <div className="flex flex-col items-center justify-center gap-5 w-full">
       <span className="text-xl font-bold text-left">Analysis</span>
-      <div className="w-full" style={{ height: '24rem' }}>
+      <div className="w-full" style={{ height: '30rem' }}>
         {insights && <Bar barData={insights?.agg} />}
       </div>
       <button

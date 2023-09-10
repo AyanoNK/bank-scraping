@@ -9,7 +9,7 @@ interface Props {
 
 const getInsightCreditExtract = async (requestData: Props | null) => {
   if (!requestData) return;
-  const { data } = await api.post(`/api/parse/credit`, requestData);
+  const { data } = await api.post(`/parse/credit`, requestData);
   return data;
 };
 
@@ -18,6 +18,7 @@ const useInsightCreditExtract = () => {
 
   return useMutation(getInsightCreditExtract, {
     onError: (error) => {
+      console.log(error);
       let errorMessage = '';
       if (axios.isAxiosError(error) && error.response?.status === 400) {
         errorMessage = `- ${error.response.data.message}`;

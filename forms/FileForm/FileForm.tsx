@@ -1,10 +1,5 @@
-'use client';
-
 import { useContext, useEffect, useState } from 'react';
 import FileUploadInput from '@/components/FileUpload/FileUploadInput';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import fileFormSchema from '@/schemas/fileFormSchema';
 import useInsightCreditExtract from '@/hooks/useInsightCreditExtract';
 import fileToBase64 from '@/providers/fileToBase64';
 import { InsightsContext } from '@/providers/InsightsContext';
