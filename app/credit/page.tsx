@@ -20,7 +20,7 @@ export default function Home() {
       }}
     >
       <ReactQueryProvider>
-        <div className="flex flex-col items-center justify-center gap-y-12 container w-max">
+        <div className="flex flex-col items-center justify-center gap-y-12 container w-full">
           <div className="flex flex-col gap-5 items-center justify-center">
             <h3 className="text-xl font-medium text-center">Supported banks</h3>
             <div className="flex flex-row gap-2 flex-wrap justify-center">
